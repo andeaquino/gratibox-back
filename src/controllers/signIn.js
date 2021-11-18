@@ -1,7 +1,7 @@
 import connection from '../database.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { signInSchema } from '../validates/signIn.validate.js';
+import { signInSchema } from '../schemas/signInSchema.js';
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;

@@ -21,7 +21,7 @@ const createUser = async () => {
         VALUES ($1, $2, $3)
         RETURNING id
         ;`,
-    [user.email, user.name, passwordHash]
+    [user.name, user.email, passwordHash]
   );
 
   user.id = insertedUser.rows[0].id;
