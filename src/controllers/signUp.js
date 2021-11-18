@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import connection from '../database.js';
-import signUpSchema from '../schemas/signUpSchema.js';
+import { signUpSchema } from '../schemas/signUpSchema.js';
 
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;
@@ -38,4 +38,4 @@ const signUp = async (req, res) => {
   }
 };
 
-export default { signUp };
+export { signUp };

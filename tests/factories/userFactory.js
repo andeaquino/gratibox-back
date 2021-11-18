@@ -2,14 +2,16 @@ import faker from 'faker';
 import bcrypt from 'bcrypt';
 import connection from '../../src/database';
 
-const generateClientBody = () => ({
-  name: faker.name.findName(),
-  email: faker.internet.email(),
-  password: faker.internet.password('########'),
-});
+const generateUserBody = (user) => {
+  return {
+    name: user?.name || faker.name.findName(),
+    email: user?.email || faker.internet.email(),
+    password: user?.password || faker.internet.password(8),
+  };
+};
 
-const createClient = async () => {
-  const user = generateClientBody();
+const createUser = async () => {
+  const user = generateUserBody();
   const passwordHash = bcrypt.hashSync(user.password, 10);
 
   const insertedUser = await connection.query(
@@ -27,4 +29,4 @@ const createClient = async () => {
   return user;
 };
 
-export default { createClient };
+export { generateUserBody, createUser };
