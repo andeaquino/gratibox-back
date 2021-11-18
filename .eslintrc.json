@@ -19,10 +19,6 @@
             {
                 "js": "ignorePackages"
             }
-        ],
-        "indent": "off",
-        "operator-linebreak":"off",
-        "object-curly-newline":"off",
-        "comma-dangle":"off"
+        ]
     }
 }
