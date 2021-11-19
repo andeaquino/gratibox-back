@@ -29,7 +29,7 @@ const postPlan = async (req, res) => {
     const subId = result.rows[0].id;
     products.forEach(async (product) => {
       await connection.query(
-        `INSERT INTO sub_products (sub_id, products_id) VALUES ($1, $2)`,
+        `INSERT INTO sub_products (sub_id, product_id) VALUES ($1, $2)`,
         [subId, product]
       );
     });
@@ -41,6 +41,41 @@ const postPlan = async (req, res) => {
 
     return res.sendStatus(201);
   } catch {
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 };
+
+const listPlan = async (req, res) => {
+  try {
+    const result = await connection.query(
+      `
+      SELECT
+      plans.name AS "planType",
+      dates.date AS "planDate",
+      products.name AS "product"
+      FROM subscriptions
+      JOIN plans
+        ON subscriptions.plan_id = plans.id
+      JOIN dates
+        ON subscriptions.date_id = dates.id
+      JOIN sub_products
+        ON sub_products.sub_id = subscriptions.id
+      JOIN products
+        ON products.id = sub_products.product_id
+      WHERE subscriptions.user_id = $1
+      ;`,
+      [req.userId]
+    );
+
+    if (result.rowCount === 0) return res.sendStatus(404);
+
+    const products = result.rows.map((plan) => plan.product);
+    const data = [result.rows[0].planType, result.rows[0].planDate, products];
+
+    res.status(200).send({ data });
+  } catch {
+    return res.sendStatus(500);
+  }
+};
+
+export { postPlan, listPlan };
