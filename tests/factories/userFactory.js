@@ -2,6 +2,13 @@ import faker from 'faker';
 import bcrypt from 'bcrypt';
 import connection from '../../src/database';
 
+const createToken = () => {
+  const id = faker.datatype.number();
+
+  const token = jwt.sign({ payload: id }, process.env.JWT_SECRET);
+  return token;
+};
+
 const generateUserBody = (user) => {
   return {
     name: user?.name || faker.name.findName(),
@@ -29,4 +36,4 @@ const createUser = async () => {
   return user;
 };
 
-export { generateUserBody, createUser };
+export { createToken, generateUserBody, createUser };
