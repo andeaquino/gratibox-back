@@ -1,11 +1,12 @@
 import connection from '../database.js';
+import { planSchema } from '../schemas/planSchema.js';
 
 const postPlan = async (req, res) => {
   const { planType, planDate, products, name, adress, cep, city, state } =
     req.body;
 
   if (
-    signInSchema.validate({
+    planSchema.validate({
       planType,
       planDate,
       products,
