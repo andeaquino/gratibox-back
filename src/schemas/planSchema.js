@@ -5,7 +5,7 @@ const planSchema = joi.object({
   planDate: joi.number().required(),
   products: joi.array().required(),
   name: joi.string().required(),
-  adress: joi.string().required(),
+  address: joi.string().required(),
   cep: joi.string().required(),
   city: joi.string().required(),
   state: joi.string().required(),

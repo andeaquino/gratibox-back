@@ -42,7 +42,7 @@ const postPlan = async (req, res) => {
     });
 
     await connection.query(
-      `INSERT INTO adresses (subscription_id, name, address, cep, city, state) VALUES ($1, $2, $3, $4, $5, $6)`,
+      `INSERT INTO adresses (subscription_id, name, adress, cep, city, state) VALUES ($1, $2, $3, $4, $5, $6)`,
       [subId, name, address, cep, city, state]
     );
 

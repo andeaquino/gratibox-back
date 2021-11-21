@@ -2,8 +2,8 @@ import faker from 'faker';
 
 const createPlan = () => {
   const plan = {
-    planType: faker.number({ min: 1, max: 2 }),
-    planDate: faker.number({ min: 1, max: 2 }),
+    planType: faker.datatype.number({ min: 1, max: 2 }),
+    planDate: faker.datatype.number({ min: 1, max: 2 }),
     products: [1, 2, 3],
     name: faker.name.findName(),
     address: faker.address.streetAddress(),
