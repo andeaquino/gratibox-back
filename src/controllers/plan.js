@@ -2,7 +2,7 @@ import connection from '../database.js';
 import { planSchema } from '../schemas/planSchema.js';
 
 const postPlan = async (req, res) => {
-  const { planType, planDate, products, name, adress, cep, city, state } =
+  const { planType, planDate, products, name, address, cep, city, state } =
     req.body;
 
   if (
@@ -11,7 +11,7 @@ const postPlan = async (req, res) => {
       planDate,
       products,
       name,
-      adress,
+      address,
       cep,
       city,
       state,
@@ -21,6 +21,13 @@ const postPlan = async (req, res) => {
   }
 
   try {
+    const checkPlan = await connection.query(
+      `SELECT * FROM subscriptions WHERE user_id = $1`,
+      [req.userId]
+    );
+    if (checkPlan.rowCount !== 0)
+      return res.status(409).send('User already has a plan');
+
     const result = await connection.query(
       `INSERT INTO subscriptions (user_id, plan_id, date_id) VALUES($1, $2, $3) RETURNING id`,
       [req.userId, planType, planDate]
@@ -35,8 +42,8 @@ const postPlan = async (req, res) => {
     });
 
     await connection.query(
-      `INSERT INTO adresses (subscription_id, name, adress, cep, city, state) VALUES ($1, $2, $3, $4, $5, $6)`,
-      [subId, name, adress, cep, city, state]
+      `INSERT INTO adresses (subscription_id, name, address, cep, city, state) VALUES ($1, $2, $3, $4, $5, $6)`,
+      [subId, name, address, cep, city, state]
     );
 
     return res.sendStatus(201);

@@ -1,2 +1,17 @@
 import faker from 'faker';
-import connection from '../../src/database';
+
+const createPlan = () => {
+  const plan = {
+    planType: faker.number({ min: 1, max: 2 }),
+    planDate: faker.number({ min: 1, max: 2 }),
+    products: [1, 2, 3],
+    name: faker.name.findName(),
+    address: faker.address.streetAddress(),
+    cep: faker.address.zipCode(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+  };
+  return plan;
+};
+
+export { createPlan };
