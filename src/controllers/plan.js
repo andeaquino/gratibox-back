@@ -29,7 +29,7 @@ const postPlan = async (req, res) => {
       return res.status(409).send('User already has a plan');
 
     const result = await connection.query(
-      `INSERT INTO subscriptions (user_id, plan_id, date_id) VALUES($1, $2, $3) RETURNING id`,
+      `INSERT INTO subscriptions (user_id, plan_id, date_id, date) VALUES($1, $2, $3, NOW()) RETURNING id`,
       [req.userId, planType, planDate]
     );
 
@@ -57,6 +57,7 @@ const listPlan = async (req, res) => {
     const result = await connection.query(
       `
       SELECT
+      subscriptions.date,
       plans.name AS "planType",
       dates.date AS "planDate",
       products.name AS "product"
