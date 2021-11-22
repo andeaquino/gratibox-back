@@ -82,9 +82,10 @@ const listPlan = async (req, res) => {
       planType: result.rows[0].planType,
       planDate: result.rows[0].planDate,
       products,
+      date: result.rows[0].date,
     };
 
-    res.status(200).send({ plan });
+    res.status(200).send(plan);
   } catch {
     return res.sendStatus(500);
   }
