@@ -78,9 +78,13 @@ const listPlan = async (req, res) => {
     if (result.rowCount === 0) return res.sendStatus(404);
 
     const products = result.rows.map((plan) => plan.product);
-    const data = [result.rows[0].planType, result.rows[0].planDate, products];
+    const plan = {
+      planType: result.rows[0].planType,
+      planDate: result.rows[0].planDate,
+      products,
+    };
 
-    res.status(200).send({ data });
+    res.status(200).send({ plan });
   } catch {
     return res.sendStatus(500);
   }
